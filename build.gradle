@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.41'
+}
+
+group 'org.example'
+version '2.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.snmp4j', name: 'snmp4j', version: '3.4.5'
+    implementation 'com.sparkjava:spark-core:2.7.2'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ServerKt'
+    }
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory()? it: zipTree(it)
+        }
+    }
+}
+
+sourceSets {
+    main.java.srcDirs += 'src/main/kotlin/'
+    test.java.srcDirs += 'src/test/kotlin/'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+
+test {
+    useJUnitPlatform()
+}

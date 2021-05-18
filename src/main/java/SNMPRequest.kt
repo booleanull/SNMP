@@ -1,0 +1,1 @@
+data class SNMPRequest(val address: List<String>)
